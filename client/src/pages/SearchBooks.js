@@ -28,7 +28,7 @@ const SearchBooks = () => {
     if (!searchInput) {
       return false;
     }
-    
+
     try {
       const response = await searchGoogleBooks(searchInput);
 
@@ -64,15 +64,12 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
-
+    // repalce save book and add setSavedBookIds
     try {
-      const response = await saveBook(bookToSave, token);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      // if book successfully saves to user's account, save book id to state
+      const { data } = await saveBook({
+        variables: { bookData: { ...bookToSave } },
+      });
+      console.log(savedBookIds);
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
